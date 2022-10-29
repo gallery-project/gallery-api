@@ -9,7 +9,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      username: {
+      name: {
         type: Sequelize.STRING
       },
       email: {
@@ -26,15 +26,6 @@ module.exports = {
       },
       bigPic: {
         type: Sequelize.STRING
-      },
-      deletedAt: {
-        type: Sequelize.DATE
-      },
-      createdAt: {
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        type: Sequelize.DATE
       },
       createdAt: {
         allowNull: false,
