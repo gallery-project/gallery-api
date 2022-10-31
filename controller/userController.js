@@ -22,10 +22,6 @@ var store = async function (req, res, next) {
         result.success = false,
             result.messages.push('Please check your email')
     }
-    if (avatar.length < 3) {
-        result.success = false,
-            result.messages.push('Please check your avatar')
-    }
     if (password.length < 3) {
         result.success = false,
             result.messages.push('Please check your password')
@@ -35,12 +31,12 @@ var store = async function (req, res, next) {
         return
     }
   
-    var newMember = await models.Member.create({
+    var newLogin = await models.User.create({
         name: name,
         email: email,
         password: password,
     })
-    result.data = newMember
+    result.data = newLogin
     result.messages.push("user has been created")
     res.send(result)
   }
