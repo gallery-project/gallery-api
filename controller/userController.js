@@ -57,7 +57,29 @@ var store = async function (req, res, next) {
     }
     res.send(result)
 }
+var destroy = async function (req, res, next) {
+    var result = {
+        success: true,
+        data: {},
+        messages: []
+    }
+    var id = req.params.id
+    var deleted = await models.User.destroy({
+        where: {
+            id: id
+        }
+    });
+    if (deleted) {
+
+    } else {
+        res.status(404)
+        result.success = false
+        result.messages.push("Please provid a valid ID")
+    }
+    res.send(result)
+}
   module.exports = {
     store,
-    show
+    show,
+    destroy
 }

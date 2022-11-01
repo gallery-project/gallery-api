@@ -1,9 +1,10 @@
 var express = require('express');
 var router = express.Router();
-var {store,show}=require("../controller/userController")
+var {store,show,destroy}=require("../controller/userController")
 
 router.post('/', store);
 router.get("/:id",show)
+router.delete("/:id",destroy)
 
 
 // /* GET users listing. */
