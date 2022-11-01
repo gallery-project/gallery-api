@@ -138,10 +138,43 @@ var update = async function (req, res, next) {
     result.messages.push("user has been created")
     res.send(result)
 }
+var login = async function (req, res, next) {
+    var result = {
+        success: true,
+        messages: [],
+        data: {}
+    }
+    var email = req.body.email.trim()
+    var plainTextPassword = req.body.password.trim()
+    var loggedMember = await models.User.findOne({
+        where: {
+            email: email,
+        }
+    }).then((user) => {
+        if (!user) {
+            return false
+        } else {
+            let passwordMach = bcrypt.compareSync(plainTextPassword, user.password)
+            if (passwordMach) {
+                return user
+            } else {
+                return false
+            }
+        }
+    })
+    if (loggedMember) {
+        result.data = loggedMember
+    } else {
+        result.success = false
+        result.messages.push('wrong email or password')
+    }
+    res.send(result)
+}
   module.exports = {
     store,
     show,
     destroy,
     index,
-    update
+    update,
+    login
 }
