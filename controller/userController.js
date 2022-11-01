@@ -100,9 +100,14 @@ var update = async function (req, res, next) {
         messages: [],
         data: {}
     }
+    function cryptPassword(plainTextPassword) {
+        var salt = bcrypt.genSaltSync(10);
+        var hash = bcrypt.hashSync(plainTextPassword, salt);
+        return hash
+    }
     var name = req.body.name.trim()
     var email = req.body.email.trim()
-    var password = req.body.password.trim()
+    var password = cryptPassword(req.body.password.trim())
     if (name.length < 3) {
         result.success = false
         result.messages.push('Please check your name')
