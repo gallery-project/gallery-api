@@ -40,7 +40,24 @@ var store = async function (req, res, next) {
     result.messages.push("user has been created")
     res.send(result)
   }
+  var show = async function (req, res, next) {
+    var result = {
+        success: true,
+        data: {},
+        messages: []
+    }
+    var id = req.params.id
+    var user = await models.User.findByPk(id)
+    if (user) {
+        result.data = user
+    } else {
+        res.status(404)
+        result.success = false
+        result.messages.push("Please provide a valid ID")
+    }
+    res.send(result)
+}
   module.exports = {
     store,
-  
+    show
 }

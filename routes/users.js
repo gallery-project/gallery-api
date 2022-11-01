@@ -1,8 +1,10 @@
 var express = require('express');
 var router = express.Router();
-var {store}=require("../controller/userController")
+var {store,show}=require("../controller/userController")
 
-router.post('/', store)
+router.post('/', store);
+router.get("/:id",show)
+
 
 // /* GET users listing. */
 // router.get('/', function(req, res, next) {
