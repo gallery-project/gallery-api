@@ -78,8 +78,25 @@ var destroy = async function (req, res, next) {
     }
     res.send(result)
 }
+var index = async function (req, res, next) {
+    var result = {
+        success: true,
+        data: {},
+        messages: []
+    }
+    var User = await models.User.findAll()
+    if (Array.isArray(User)) {
+        result.data = User
+    } else {
+        res.status(404)
+        res.success = false
+        res.messages.push("Plase try again")
+    }
+    res.send(result)
+}
   module.exports = {
     store,
     show,
-    destroy
+    destroy,
+    index
 }
