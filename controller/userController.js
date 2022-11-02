@@ -1,5 +1,7 @@
 var models =require("../models");
 var bcrypt = require('bcryptjs');
+// var {authService} =require("../services/authService")
+var {userInfoTransformer} =require("../transformers/userTransformers")
 var store = async function (req, res, next) {
     var result = {
         success: true,
@@ -40,6 +42,7 @@ var store = async function (req, res, next) {
     result.messages.push("user has been created")
     res.send(result)
   }
+  
   var show = async function (req, res, next) {
     var result = {
         success: true,
@@ -125,7 +128,7 @@ var update = async function (req, res, next) {
         return
     }
     var id = req.params.id
-    var updatedMember = await models.User.update({
+    var updatedUser = await models.User.update({
         name: name,
         email: email,
         password: password
@@ -134,7 +137,7 @@ var update = async function (req, res, next) {
             id
         }
     })
-    result.data = updatedMember
+    result.data = updatedUser
     result.messages.push("user has been created")
     res.send(result)
 }
