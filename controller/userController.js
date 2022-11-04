@@ -1,6 +1,6 @@
 var models =require("../models");
 var bcrypt = require('bcryptjs');
-// var {authService} =require("../services/authService")
+var {authService} =require("../services/authService")
 var {userInfoTransformer} =require("../transformers/userTransformers")
 var store = async function (req, res, next) {
     var result = {
@@ -33,13 +33,30 @@ var store = async function (req, res, next) {
         return
     }
   
-    var newLogin = await models.User.create({
-        name: name,
-        email: email,
-        password: password,
+    // var newLogin = await models.User.create({
+    //     name: name,
+    //     email: email,
+    //     password: password,
+    // })
+    // result.data = newLogin
+    // result.messages.push("user has been created")
+    // res.send(result)
+    var [user, created] = await models.User.findOrCreate({
+        where: {
+            email: email
+        },
+        defaults: {
+            name: name,
+            password: password
+        }
     })
-    result.data = newLogin
-    result.messages.push("user has been created")
+    if (created) {
+        result.messages.push('Admin has been created successfully')
+    } else {
+        result.success = false
+        result.messages.push('You are already registered')
+    }
+    result.data = user
     res.send(result)
   }
   
