@@ -90,7 +90,8 @@ var destroy = async function (req, res, next) {
         }
     });
     if (deleted) {
-
+        res.status(200)
+        result.messages.push('Admin has been deleted')
     } else {
         res.status(404)
         result.success = false
